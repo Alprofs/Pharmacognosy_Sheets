@@ -1,0 +1,420 @@
+/* ========================================================================== CSS Variables & Theme ==========================================================================*/
+:root {
+    --bg-color: #ffffff;
+    --text-main: #4b4b4b;
+    --text-muted: #afafaf;
+    --primary-green: #58cc02;
+    --primary-green-dark: #58a700;
+    --secondary-blue: #1cb0f6;
+    --secondary-blue-dark: #1899d6;
+    --border-grey: #e5e5e5;
+    --bg-grey: #f7f7f7;
+    --card-radius: 16px;
+    --quiz-bg: #F0F4F8;
+    --btn-green: #12D11E;
+    --btn-green-dark: #0fb319;
+    --btn-blue: #2196F3;
+    --btn-blue-dark: #1976D2;
+    --correct-bg: #E8F5E9;
+    --correct-border: #2E7D32;
+    --wrong-bg: #FFEBEE;
+    --wrong-border: #C62828;
+    --progress-yellow: #FFC107;
+    --orange-bg: #FFFDE7;
+    --orange-border: #FBC02D;
+    --orange-text: #F57F17;
+}
+* {
+    box-sizing: border-box;
+    font-family: 'Nunito', 'Cairo', 'Almarai', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+.rtl-mode {
+    direction: rtl !important;
+    text-align: right !important;
+}
+.rtl-mode .english-content,
+.rtl-mode .quiz-question-box,
+.rtl-mode .option-btn,
+.rtl-mode .orange-note-box {
+    direction: rtl !important;
+    text-align: right !important;
+}
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 2px solid var(--border-grey);
+    background: white;
+    z-index: 10;
+    direction: ltr;
+}
+#app-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-main);
+    text-transform: uppercase;
+}
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-weight: 900;
+}
+.icon-btn.hidden {
+    visibility: hidden;
+    pointer-events: none;
+}
+#app-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
+    background-color: var(--bg-color);
+}
+.screen {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+    direction: ltr;
+}
+.sheet-grid, .section-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-bottom: 40px;
+    direction: ltr;
+}
+@media (min-width: 600px) {
+    .sheet-grid, .section-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+.sheet-card, .section-card {
+    border: 2px solid var(--border-grey);
+    border-radius: var(--card-radius);
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 0 var(--border-grey);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: 0.2s;
+    text-align: left;
+    align-items: flex-start;
+    direction: ltr;
+}
+.sheet-card { gap: 15px; }
+.section-card {
+    padding: 30px 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 0 var(--border-grey);
+}
+.sheet-card:active:not(.locked), .section-card:active {
+    transform: translateY(4px);
+    box-shadow: 0 0px 0 transparent;
+}
+.sheet-card.locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--bg-grey);
+}
+.sheet-title, .section-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+.section-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+.section-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-weight: 700;
+    line-height: 1.4;
+}
+.main-progress-bg {
+    width: 100%;
+    height: 22px;
+    background: var(--border-grey);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.main-progress-fill {
+    height: 100%;
+    background: var(--primary-green);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+}
+#section-content {
+    display: none;
+    padding-bottom: 80px;
+}
+.english-content {
+    direction: ltr;
+    text-align: left;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+/* ==========================================================================
+   تنسيق الصور داخل الأسئلة
+========================================================================== */
+.question-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 15px 0;
+    display: block;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 2px solid var(--border-grey);
+}
+
+.floating-btn {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background-color: var(--btn-blue);
+    color: white;
+    border: none;
+    padding: 15px 22px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 16px;
+    box-shadow: 0 5px 0 var(--btn-blue-dark);
+    cursor: pointer;
+    z-index: 150;
+    transition: transform 0.1s;
+}
+.floating-btn:active {
+    transform: translateY(5px);
+    box-shadow: 0 0px 0 transparent;
+}
+.floating-btn.hidden { display: none; }
+
+/* Quiz Styles */
+.quiz-wrapper {
+    background-color: var(--quiz-bg);
+    min-height: calc(100vh - 65px);
+    padding: 20px 20px 120px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.quiz-header {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.quiz-progress-bar-bg {
+    flex-grow: 1;
+    height: 18px;
+    background: #E0E0E0;
+    border-radius: 10px;
+    margin: 0 15px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.quiz-progress-bar-fill {
+    height: 100%;
+    background: var(--progress-yellow);
+    width: 0%;
+    transition: width 0.4s ease;
+}
+.close-btn {
+    color: #D32F2F;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 10px;
+}
+#round-info {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #1976D2;
+    font-weight: 800;
+    font-size: 18px;
+}
+.quiz-question-box {
+    width: 100%;
+    max-width: 800px;
+    padding: 15px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #000;
+    font-weight: 800;
+    line-height: 1.4;
+    background: white;
+    border: 3px solid var(--border-grey);
+    border-radius: 20px;
+    box-shadow: 0 4px 0 var(--border-grey);
+    text-align: left;
+    direction: ltr;
+}
+.options-container {
+    width: 100%;
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+@media (min-width: 600px) {
+    .options-container { grid-template-columns: 1fr 1fr; }
+}
+.option-btn {
+    border: 3px solid var(--border-grey);
+    border-radius: 15px;
+    padding: 12px 15px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    background: white;
+    box-shadow: 0 5px 0 var(--border-grey);
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    direction: ltr;
+}
+.option-btn.active-click:active {
+    transform: translateY(5px);
+    box-shadow: 0 0px 0 transparent;
+}
+.option-btn.correct {
+    background: var(--correct-bg) !important;
+    border-color: var(--correct-border) !important;
+    color: var(--correct-border) !important;
+    box-shadow: 0 5px 0 var(--correct-border);
+    pointer-events: none;
+}
+.option-btn.wrong {
+    background: var(--wrong-bg) !important;
+    border-color: var(--wrong-border) !important;
+    color: var(--wrong-border) !important;
+    box-shadow: 0 5px 0 var(--wrong-border);
+    pointer-events: none;
+}
+.option-btn.locked { pointer-events: none; }
+.quiz-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    z-index: 100;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+}
+.nav-btn {
+    flex: 1;
+    max-width: 390px;
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    font-size: 20px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.1s;
+    font-family: 'Almarai', sans-serif;
+}
+.nav-btn.next { background: var(--btn-green); box-shadow: 0 5px 0 var(--btn-green-dark); }
+.nav-btn.prev { background: var(--btn-blue); box-shadow: 0 5px 0 var(--btn-blue-dark); }
+.nav-btn:disabled { background: #B0BEC5; box-shadow: 0 5px 0 #90A4AE; cursor: not-allowed; opacity: 0.7; }
+.btn-main {
+    background-color: var(--btn-green);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 20px;
+    border: none;
+    font-size: 20px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.1s;
+    font-family: 'Almarai', sans-serif;
+}
+.btn-main:active {
+    transform: translateY(5px);
+    box-shadow: 0 0px 0 transparent !important;
+}
+
+/* Hint Box */
+.orange-note-box {
+    background-color: var(--orange-bg) !important;
+    border: 3px solid var(--orange-border) !important;
+    border-radius: 15px !important;
+    padding: 15px !important;
+    margin: 20px 0 25px 0 !important;
+    box-shadow: 0 4px 0 var(--orange-border) !important;
+    text-align: left;
+    direction: ltr;
+    width: 100%;
+    max-width: 800px;
+}
+.orange-note-title {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: var(--orange-text) !important;
+    margin-bottom: 8px !important;
+}
+.explanation-list {
+    margin: 0;
+    padding-left: 25px;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    list-style-type: disc;
+}
+
+/* Overlays */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.dialog {
+    background: white;
+    border-radius: 30px;
+    padding: 40px 30px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    animation: popIn 0.5s;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
