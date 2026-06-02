@@ -79,7 +79,7 @@ DataStore.sheets.push({
                 "بويضة برمائية (Amphitropous)",
                 "بويضة منحنية (Campylotropous)"
             ],
-            "correct": 1,
+            "correct": 0,
             "hint": "The micropyle, chalaza, and funicle are all in a straight vertical line.",
             "hintAr": "الفتحة (Micropyle)، والتقارب (Chalaza)، والحبل السري (Funicle) كلها على خط عمودي مستقيم واحد."
         },
